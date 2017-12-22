@@ -1,5 +1,8 @@
 ( function( jQuery, l10n ){
 
+  // Flag determine that is page was just loaded
+  var just_loaded_page = true;
+
   /**
    *
    * @param options
@@ -166,6 +169,10 @@
      * @return object data Returns updated WPP_QUERY object
      */
     function changeAddressValue ( this_page, data ) {
+
+      /* Not a just loaded after pagination event */
+      just_loaded_page = false;
+
       /* Set data query which will be used in history hash below */
       var q = {
         requested_page: this_page,
@@ -316,10 +323,13 @@
       jQuery( "#wpp_shortcode_" + unique_id +  " .wpp_pagination_slider" ).slider( "value", this_page );
       jQuery( '#wpp_shortcode_' + unique_id +  ' .ajax_loader' ).show();
       /* Scroll page to the top of the current shortcode */
-      if ( scroll_to ) {
+
+      if ( scroll_to && !just_loaded_page ) {
         jQuery( document ).trigger( 'wpp_pagination_change', {'overview_id': unique_id} );
       }
-      
+
+      just_loaded_page = false;
+
       jQuery( document ).trigger( 'wpp_pagination_change_start', {'overview_id': unique_id} );
 
       data = window.wpp_query[ unique_id ];
