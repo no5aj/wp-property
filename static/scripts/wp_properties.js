@@ -1,7 +1,7 @@
 jQuery( document ).ready( function () {
 
   if ( typeof jQuery.fn.fancybox === 'function' ) {
-    jQuery( 'a.fancybox_image' ).live( 'click', function () {
+    jQuery( document ).on( 'click', 'a.fancybox_image', function () {
       if ( !jQuery( this ).hasClass( 'activated' ) ) {
         jQuery( this ).fancybox( {
           'transitionIn': 'elastic',

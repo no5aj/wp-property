@@ -44,7 +44,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
 	     jQuery(this).remove();
 	    }
 	   });
-        btn.prop( 'disabled', true );	
+        btn.prop( 'disabled', true );
         var data = jQuery( this ).serialize();
         jQuery.ajax({
           type: 'POST',
@@ -225,14 +225,22 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
       delay: 200
     } );
 
-    jQuery( "#wpp_inquiry_attribute_fields tbody tr, #wpp_inquiry_meta_fields tbody tr" ).live( "mouseover", function() {
-      jQuery( this ).addClass( "wpp_draggable_handle_show" );
-    } );
+    jQuery(document).on("mouseover", "#wpp_inquiry_attribute_fields tbody tr", function () {
+      jQuery(this).addClass("wpp_draggable_handle_show");
+    });
+    ;
+    jQuery(document).on("mouseover", "#wpp_inquiry_meta_fields tbody tr", function () {
+      jQuery(this).addClass("wpp_draggable_handle_show");
+    });
     ;
 
-    jQuery( "#wpp_inquiry_attribute_fields tbody tr, #wpp_inquiry_meta_fields tbody tr" ).live( "mouseout", function() {
-      jQuery( this ).removeClass( "wpp_draggable_handle_show" );
-    } );
+    jQuery(document).on("mouseout", "#wpp_inquiry_attribute_fields tbody tr", function () {
+      jQuery(this).removeClass("wpp_draggable_handle_show");
+    });
+    ;
+    jQuery(document).on("mouseout", "#wpp_inquiry_meta_fields tbody tr", function () {
+      jQuery(this).removeClass("wpp_draggable_handle_show");
+    });
     ;
 
     /* Show advanced settings for an attribute when a certain value is changed */
@@ -244,7 +252,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
      });
      */
 
-    jQuery( ".wpp_all_advanced_settings" ).live( "click", function() {
+    jQuery( document ).on( "click", ".wpp_all_advanced_settings", function () {
       var action = jQuery( this ).attr( "action" );
 
       if( action == "expand" ) {
@@ -261,7 +269,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
     jQuery( '.wpp_attribute_group' ).wppGroups();
 
     //* Fire Event after Row is added */
-    jQuery( '#wpp_inquiry_attribute_fields tr' ).live( 'added', function() {
+    jQuery( document ).on( 'added', '#wpp_inquiry_attribute_fields tr', function () {
       //* Remove notice block if it exists */
       var notice = jQuery( this ).find( '.wpp_notice' );
       if( notice.length > 0 ) {
@@ -295,7 +303,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
     } );
 
     //* Determine if slug of property stat is the same as Geo Type has and show notice */
-    jQuery( '#wpp_inquiry_attribute_fields tr .wpp_stats_slug_field' ).live( 'change', function() {
+    jQuery( document ).on( 'change', '#wpp_inquiry_attribute_fields tr .wpp_stats_slug_field', function () {
       var slug = jQuery( this ).val();
       var geo_type = false;
       if( typeof wpp.instance.settings.geo_type_attributes == 'object' ) {
@@ -327,14 +335,14 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
       }
     } );
 
-    jQuery( ".wpp_pre_defined_value_setter" ).live( "change", function() {
+    jQuery( document ).on( "change", ".wpp_pre_defined_value_setter", function () {
       wpp.ui.settings.set_pre_defined_values_for_attribute( this );
     } );
     jQuery( ".wpp_pre_defined_value_setter" ).each( function() {
       wpp.ui.settings.set_pre_defined_values_for_attribute( this );
     } );
     // Assigning  default value
-    jQuery( ".wpp_admin_input_col .wpp_pre_defined_value_setter" ).live( "change", function() {
+    jQuery( document ).on( "change", ".wpp_admin_input_col .wpp_default_value_setter", function () {
       wpp.ui.settings.default_values_for_attribute( this );
     } );
     jQuery( ".wpp_admin_input_col .wpp_pre_defined_value_setter" ).each( function() {
@@ -344,7 +352,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
     /**
      * Upload Image
      */
-    jQuery('.button-setup-image').live( 'click', function(e) {
+    jQuery( document ).on( 'click', '.button-setup-image', function ( e ) {
       e.preventDefault();
       var section = jQuery( this).parents( '.upload-image-section' );
       if( !section.length > 0 ) {
@@ -374,7 +382,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
       wpp.ui.settings.append_default_image( jQuery(e) );
     } );
 
-    jQuery( '#wpp_inquiry_property_types tr').live( 'added', function() {
+    jQuery( document ).on( 'added', '#wpp_inquiry_property_types tr', function () {
       var section = jQuery( this).find( '.upload-image-section' );
       if( !section.length > 0 ) {
         return;
@@ -395,7 +403,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
       else
         _this.closest('td').siblings('td.wpp_admin_input_col').find('.wpp_attribute_default_values').hide();
     });
-    
+
     jQuery(document).on('click', '.apply-to-all', function(){
       var $this = jQuery(this),
           attribute  = $this.data('attribute'),
@@ -492,13 +500,13 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
       var panel = jQuery( tab.find('a').attr('href') );
 
       e.preventDefault();
-   
+
       // Don't do anything if the click is for the tab already showing.
       if ( !tab.is('.active') ){
         // Links
         jQuery('.contextual-help-tabs .active').removeClass('active');
         tab.addClass('active');
-     
+
         // Panels
         jQuery('.help-tab-content').not( panel ).removeClass('active').hide();
         panel.addClass('active').show();
@@ -582,7 +590,7 @@ jQuery.extend( wpp = wpp || {}, { ui: { settings: {
     var type                       = wpp.instance.settings.attributes.default[setting];
     var en_default_value_container = row_wrapper.find('.en_default_value_container');
     var en_default_value           = en_default_value_container.find('.en_default_value:checkbox');
-    
+
     if(typeof(type) == "undefined"){
       default_wrapper.find('.wpp_attribute_default_values').hide();
       en_default_value.prop('checked', false).attr('disabled', 'disabled').addClass('disabled').trigger('change');
